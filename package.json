@@ -11,10 +11,11 @@
     "start": "vinext start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "cf:typegen": "wrangler types",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply arogya-flow-db --local",
-    "db:migrate:remote": "wrangler d1 migrations apply arogya-flow-db --remote",
-    "deploy": "npm run build && wrangler deploy"
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
+    "deploy": "npm run build && npm run db:migrate:remote && wrangler deploy"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",
@@ -41,5 +42,27 @@
     "wrangler": "4.92.0"
   },
   "type": "module",
-  "displayName": "ArogyaFlow"
+  "displayName": "ArogyaFlow",
+  "cloudflare": {
+    "bindings": {
+      "SESSION_SECRET": {
+        "description": "Use a private random value of at least 32 characters. Do not reuse an account password."
+      },
+      "TOKEN_ENCRYPTION_KEY": {
+        "description": "Optional unless Google Calendar is enabled. Use a base64-encoded random 32-byte key."
+      },
+      "WORKER_SECRET": {
+        "description": "Optional demo job-runner secret. Use a long random value if scheduled jobs are enabled."
+      },
+      "LLM_API_KEY": {
+        "description": "Optional. Leave empty to use ArogyaFlow's deterministic AI-summary fallback."
+      },
+      "RESEND_API_KEY": {
+        "description": "Optional. Leave empty while DEMO_MODE is true."
+      },
+      "GOOGLE_CLIENT_SECRET": {
+        "description": "Optional. Add only when configuring Google Calendar OAuth."
+      }
+    }
+  }
 }

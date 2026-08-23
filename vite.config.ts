@@ -1,19 +1,8 @@
 import vinext from "vinext";
 import { defineConfig } from "vite";
 
-const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
-  "00000000-0000-4000-8000-000000000000";
-
-const localBindingConfig = {
+const workerConfig = {
   main: "./worker/index.ts",
-  compatibility_flags: ["nodejs_compat"],
-  d1_databases: [
-    {
-      binding: "DB",
-      database_name: "arogya-flow-db",
-      database_id: SITE_CREATOR_PLACEHOLDER_DATABASE_ID,
-    },
-  ],
 };
 
 export default defineConfig(async () => {
@@ -33,7 +22,7 @@ export default defineConfig(async () => {
       cloudflare({
         viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
         inspectorPort: false,
-        config: localBindingConfig,
+        config: workerConfig,
       }),
     ],
   };

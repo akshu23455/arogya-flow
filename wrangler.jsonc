@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "arogya-flow",
   "main": "dist/server/index.js",
-  "compatibility_date": "2026-08-22",
+  "compatibility_date": "2026-08-23",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "dist/client",
@@ -12,8 +12,11 @@
     {
       "binding": "DB",
       "database_name": "arogya-flow-db",
-      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID",
       "migrations_dir": "drizzle"
     }
-  ]
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
 }

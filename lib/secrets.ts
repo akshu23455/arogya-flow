@@ -1,9 +1,15 @@
 import { env } from "cloudflare:workers";
 
-function encryptionKeyBytes(): Uint8Array {
+function bytesFromBinary(value: string): Uint8Array<ArrayBuffer> {
+  const bytes = new Uint8Array(value.length);
+  for (let index = 0; index < value.length; index += 1) bytes[index] = value.charCodeAt(index);
+  return bytes;
+}
+
+function encryptionKeyBytes(): Uint8Array<ArrayBuffer> {
   const value = (env as unknown as Record<string, unknown>).TOKEN_ENCRYPTION_KEY;
   if (typeof value !== "string") throw new Error("TOKEN_ENCRYPTION_KEY is not configured");
-  const bytes = Uint8Array.from(atob(value), (character) => character.charCodeAt(0));
+  const bytes = bytesFromBinary(atob(value));
   if (bytes.length !== 32) throw new Error("TOKEN_ENCRYPTION_KEY must be a base64-encoded 32-byte key");
   return bytes;
 }
@@ -14,9 +20,9 @@ function encode(bytes: Uint8Array): string {
   return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/g, "");
 }
 
-function decode(value: string): Uint8Array {
+function decode(value: string): Uint8Array<ArrayBuffer> {
   const padded = value.replaceAll("-", "+").replaceAll("_", "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
-  return Uint8Array.from(atob(padded), (character) => character.charCodeAt(0));
+  return bytesFromBinary(atob(padded));
 }
 
 export async function encryptSecret(plainText: string): Promise<string> {

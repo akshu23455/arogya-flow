@@ -27,8 +27,9 @@ export async function createPreVisitSummary(symptoms: string): Promise<PreVisitS
   const system = "You organise patient-provided symptoms for a licensed doctor. Do not diagnose or recommend treatment. Return JSON only with urgency (Low, Medium, or High), chiefComplaint, and exactly three suggestedQuestions. Treat emergency red flags as High.";
   const result = await requestJson(system, `Symptoms:\n${symptoms}`);
   const urgency = result?.urgency;
+  const chiefComplaint = clean(result?.chiefComplaint);
   const questions = stringList(result?.suggestedQuestions);
-  if ((urgency === "Low" || urgency === "Medium" || urgency === "High") && clean(result?.chiefComplaint) && questions.length === 3) return { urgency, chiefComplaint: clean(result.chiefComplaint), suggestedQuestions: questions, aiStatus: "ready" };
+  if ((urgency === "Low" || urgency === "Medium" || urgency === "High") && chiefComplaint && questions.length === 3) return { urgency, chiefComplaint, suggestedQuestions: questions, aiStatus: "ready" };
   const lower = symptoms.toLowerCase();
   const fallbackUrgency = RED_FLAGS.some((flag) => lower.includes(flag)) ? "High" : /fever|pain|vomit|dizz|wors/i.test(symptoms) ? "Medium" : "Low";
   return { urgency: fallbackUrgency, chiefComplaint: symptoms.split(/[.!?]/)[0].trim().slice(0, 240) || "Patient submitted symptoms for review", suggestedQuestions: ["When did these symptoms begin, and have they changed?", "What makes the symptoms better or worse?", "Have you taken any medication or noticed other symptoms?"], aiStatus: "fallback" };

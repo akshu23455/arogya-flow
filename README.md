@@ -4,7 +4,9 @@
 
 ![ArogyaFlow healthcare appointment and follow-up manager](docs/arogya-flow-cover.webp)
 
-**Hosted demo:** add the public Cloudflare Workers URL here after deployment.
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/akshu23455/arogya-flow)
+
+**Live demo:** Cloudflare will show the public `workers.dev` URL after the one-click deployment finishes. Add that URL here so reviewers can open the app immediately.
 
 ArogyaFlow is a healthcare appointment and follow-up manager for patients, doctors, and clinic administrators. It treats booking collisions, doctor leave, AI failure, and notification failure as first-class product states—not edge cases hidden behind a polished form.
 
