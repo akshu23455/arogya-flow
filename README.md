@@ -2,6 +2,8 @@
 
 > Care that stays in sync.
 
+![ArogyaFlow healthcare appointment and follow-up manager](docs/arogya-flow-cover.webp)
+
 **Hosted demo:** add the public Cloudflare Workers URL here after deployment.
 
 ArogyaFlow is a healthcare appointment and follow-up manager for patients, doctors, and clinic administrators. It treats booking collisions, doctor leave, AI failure, and notification failure as first-class product states—not edge cases hidden behind a polished form.
