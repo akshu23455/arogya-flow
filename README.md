@@ -6,8 +6,6 @@
 
 ArogyaFlow is a healthcare appointment and follow-up manager for patients, doctors, and clinic administrators. It treats booking collisions, doctor leave, AI failure, and notification failure as first-class product states—not edge cases hidden behind a polished form.
 
-![ArogyaFlow social preview](public/og.png)
-
 ## 90-second reviewer tour
 
 1. In **Patient**, choose **Book another**. Pick a doctor and time, then tell the doctor what has been bothering you.
